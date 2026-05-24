@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "defillama": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "${CLAUDE_PLUGIN_ROOT}/connectors/defillama",
+        "run",
+        "python",
+        "-m",
+        "defillama_mcp.server"
+      ]
+    }
+  }
+}

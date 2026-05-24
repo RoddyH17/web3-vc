@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# uv / virtualenvs
+.venv/
+.python-version
+uv.lock
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# plugin runtime outputs (user research artifacts — committed individually if user wants)
+/scans/
+/fundamentals/
+/scout/
+/onchain/
+/theses/
+/watchlist/
+
+# secrets (none used in Phase 0, but reserve)
+.env
+.env.local

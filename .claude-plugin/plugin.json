@@ -1,0 +1,8 @@
+{
+  "name": "web3-vc",
+  "version": "0.1.0",
+  "description": "Web3 venture capital research toolkit — sector scanning, protocol unit economics, smart-money sourcing, and on-chain microstructure for DEX / perp / intent / app-chain investing.",
+  "author": {
+    "name": "Roddy Huang"
+  }
+}
