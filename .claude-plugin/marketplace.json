@@ -10,7 +10,7 @@
       "name": "web3-vc",
       "description": "Web3 VC research toolkit. Skills: sector-scan, unit-economics, smart-money-scout (active) + onchain-flow, thesis-draft, governance-watch (Phase 1 stubs). Includes DefiLlama MCP connector.",
       "source": "./plugins/web3-vc",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "research",
       "author": {
         "name": "Roddy Huang"
