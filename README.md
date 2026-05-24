@@ -18,11 +18,11 @@ Three guardrails are baked into every skill:
 
 Claude Code plugin skills are namespaced under the plugin name, so all commands are invoked as `/web3-vc:<command>`.
 
-### Active (Phase 0)
+### Active (Phase 0 + early Phase 1)
 
 | Command | Skill | Connector | Status |
 | --- | --- | --- | --- |
-| `/web3-vc:sector` | sector-scan | DefiLlama | ready |
+| `/web3-vc:sector` | sector-scan | DefiLlama + Dune (optional) | ready (Porter 5-forces framework, dual-view output) |
 | `/web3-vc:unit-economics` | unit-economics | DefiLlama | ready (light) |
 | `/web3-vc:fundamental` | fundamental | DefiLlama + CoinGecko | ready (deep: bridge audit + Gordon reverse-engineering) |
 | `/web3-vc:scout` | smart-money-scout | DefiLlama | ready (limited) |
@@ -31,7 +31,7 @@ Claude Code plugin skills are namespaced under the plugin name, so all commands 
 
 | Command | Skill | Connector needed | Status |
 | --- | --- | --- | --- |
-| `/web3-vc:onchain` | onchain-flow | Dune Analytics MCP | stub |
+| `/web3-vc:onchain` | onchain-flow | Dune Analytics MCP (already wired ✅) | stub (skill design pending) |
 | `/web3-vc:thesis` | thesis-draft | (none new) | stub |
 | `/web3-vc:watch` | governance-watch | GitHub MCP + Discourse REST | stub |
 
@@ -92,6 +92,24 @@ In Claude Code, run:
 ```
 
 The marketplace ships with one plugin (also named `web3-vc`), so the install syntax is `<plugin-name>@<marketplace-name>` — both happen to be `web3-vc`.
+
+### Step 1.5 (optional): Configure Dune Analytics for the depth layer
+
+`/web3-vc:sector` runs in two layers — DefiLlama for breadth (works out of the box) and Dune for depth (share migration, deposit concentration, liquidations). The depth layer is optional but recommended.
+
+To enable Dune:
+
+1. Sign up at [dune.com](https://dune.com) and create an API key (free Plus tier gives ~1000 query executions/month — enough for a personal research workflow)
+2. Add to your `~/.zshrc`:
+
+   ```bash
+   export DUNE_API_KEY="dune_xxxxx_your_key"
+   ```
+
+3. Restart Claude Code so the env var propagates
+4. Verify with: `Using the dune MCP, run searchDocs("lending")` — should return Dune docs results
+
+Full setup details + SQL template library in [`plugins/web3-vc/connectors/dune/README.md`](plugins/web3-vc/connectors/dune/README.md).
 
 ### Step 2: Verify
 

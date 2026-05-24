@@ -10,6 +10,13 @@
         "-m",
         "defillama_mcp.server"
       ]
+    },
+    "dune": {
+      "type": "http",
+      "url": "https://api.dune.com/mcp/v1",
+      "headers": {
+        "X-DUNE-API-KEY": "${DUNE_API_KEY}"
+      }
     }
   }
 }
