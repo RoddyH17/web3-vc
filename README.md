@@ -23,7 +23,8 @@ Claude Code plugin skills are namespaced under the plugin name, so all commands 
 | Command | Skill | Connector | Status |
 | --- | --- | --- | --- |
 | `/web3-vc:sector` | sector-scan | DefiLlama | ready |
-| `/web3-vc:unit-economics` | unit-economics | DefiLlama | ready |
+| `/web3-vc:unit-economics` | unit-economics | DefiLlama | ready (light) |
+| `/web3-vc:fundamental` | fundamental | DefiLlama + CoinGecko | ready (deep: bridge audit + Gordon reverse-engineering) |
 | `/web3-vc:scout` | smart-money-scout | DefiLlama | ready (limited) |
 
 ### Scaffolded (Phase 1 — design only)

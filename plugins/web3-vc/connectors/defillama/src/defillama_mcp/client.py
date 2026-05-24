@@ -113,9 +113,23 @@ class DefiLlamaClient:
             params["excludeTotalDataChartBreakdown"] = "true"
         return await self._get(f"{BASE_TVL}/overview/fees", params=params)
 
-    async def protocol_fees(self, slug: str) -> dict:
-        """Fees and revenue for a single protocol."""
-        return await self._get(f"{BASE_TVL}/summary/fees/{slug}")
+    async def protocol_fees(self, slug: str, data_type: str = "dailyFees") -> dict:
+        """Fees / revenue / holders-revenue summary for a single protocol.
+
+        `data_type` selects which dollar stream the endpoint returns under
+        the `total24h/7d/30d/AllTime` keys. DefiLlama supports:
+
+        - `dailyFees` — total fees paid by users (default)
+        - `dailyRevenue` — portion accruing to the protocol (after LP cut)
+        - `dailyHoldersRevenue` — portion accruing to token holders (THE
+          "value capture bridge" metric — usually 0 if no fee switch /
+          buyback / staking distribution)
+        - `dailySupplySideRevenue` — portion accruing to LPs/suppliers
+        """
+        return await self._get(
+            f"{BASE_TVL}/summary/fees/{slug}",
+            params={"dataType": data_type},
+        )
 
     async def protocol_dex(self, slug: str) -> dict:
         """Volume detail for a single DEX protocol."""
