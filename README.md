@@ -16,106 +16,134 @@ Three guardrails are baked into every skill:
 
 ## What's in the plugin
 
+Claude Code plugin skills are namespaced under the plugin name, so all commands are invoked as `/web3-vc:<command>`.
+
 ### Active (Phase 0)
 
 | Command | Skill | Connector | Status |
 | --- | --- | --- | --- |
-| `/sector` | sector-scan | DefiLlama | ready |
-| `/unit-economics` | unit-economics | DefiLlama | ready |
-| `/scout` | smart-money-scout | DefiLlama | ready (limited) |
+| `/web3-vc:sector` | sector-scan | DefiLlama | ready |
+| `/web3-vc:unit-economics` | unit-economics | DefiLlama | ready |
+| `/web3-vc:scout` | smart-money-scout | DefiLlama | ready (limited) |
 
 ### Scaffolded (Phase 1 — design only)
 
 | Command | Skill | Connector needed | Status |
 | --- | --- | --- | --- |
-| `/onchain` | onchain-flow | Dune Analytics MCP | stub |
-| `/thesis` | thesis-draft | (none new) | stub |
-| `/watch` | governance-watch | GitHub MCP + Discourse REST | stub |
+| `/web3-vc:onchain` | onchain-flow | Dune Analytics MCP | stub |
+| `/web3-vc:thesis` | thesis-draft | (none new) | stub |
+| `/web3-vc:watch` | governance-watch | GitHub MCP + Discourse REST | stub |
 
 ## Repository layout
 
+This repo is a Claude Code **marketplace** containing one **plugin**. Claude Code requires this separation: a marketplace catalog at the root, with each plugin in its own subdirectory under `plugins/`.
+
 ```text
-web3-vc/
+web3-vc/                                  # marketplace root
 ├── .claude-plugin/
-│   └── plugin.json            # plugin manifest
-├── .mcp.json                  # connector wiring
-├── hooks/
-│   └── hooks.json             # (empty in Phase 0)
-├── commands/                  # slash-command entrypoints
-│   ├── sector.md
-│   ├── unit-economics.md
-│   ├── scout.md
-│   ├── onchain.md             # stub
-│   ├── thesis.md              # stub
-│   └── watch.md               # stub
-├── skills/                    # workflow + methodology definitions
-│   ├── sector-scan/SKILL.md
-│   ├── unit-economics/SKILL.md
-│   ├── smart-money-scout/SKILL.md
-│   ├── onchain-flow/SKILL.md       # stub
-│   ├── thesis-draft/SKILL.md       # stub
-│   └── governance-watch/SKILL.md   # stub
-├── connectors/
-│   └── defillama/             # local Python MCP server
-│       ├── pyproject.toml
-│       ├── src/defillama_mcp/
-│       └── tests/
+│   └── marketplace.json                  # marketplace catalog (lists the plugin)
+├── plugins/
+│   └── web3-vc/                          # the plugin
+│       ├── .claude-plugin/
+│       │   └── plugin.json               # plugin manifest
+│       ├── .mcp.json                     # connector wiring
+│       ├── hooks/hooks.json              # (empty in Phase 0)
+│       ├── commands/                     # slash-command entrypoints
+│       │   ├── sector.md
+│       │   ├── unit-economics.md
+│       │   ├── scout.md
+│       │   ├── onchain.md                # stub
+│       │   ├── thesis.md                 # stub
+│       │   └── watch.md                  # stub
+│       ├── skills/                       # workflow + methodology
+│       │   ├── sector-scan/SKILL.md
+│       │   ├── unit-economics/SKILL.md
+│       │   ├── smart-money-scout/SKILL.md
+│       │   ├── onchain-flow/SKILL.md     # stub
+│       │   ├── thesis-draft/SKILL.md     # stub
+│       │   └── governance-watch/SKILL.md # stub
+│       ├── connectors/
+│       │   └── defillama/                # local Python MCP server
+│       │       ├── pyproject.toml
+│       │       ├── src/defillama_mcp/
+│       │       └── tests/
+│       └── CONTRIBUTING.md
 ├── README.md
-└── CONTRIBUTING.md
+├── LICENSE
+└── .gitignore
 ```
 
 ## Install
 
 ### Prerequisites
 
-- [Claude Code](https://docs.claude.com/) — desktop / VS Code / CLI, any surface that supports plugins
-- [`uv`](https://docs.astral.sh/uv/) for the Python MCP server
+- [Claude Code](https://docs.claude.com/) v2.1.150 or later — desktop / VS Code / CLI
+- [`uv`](https://docs.astral.sh/uv/) — the DefiLlama MCP server is spawned via `uv run`
 - Python 3.11+
 
-### Step 1: Sync the DefiLlama connector
+### Step 1: Add the marketplace and install the plugin
 
-```bash
-cd connectors/defillama
-uv sync --extra dev
+In Claude Code, run:
+
+```text
+/plugin marketplace add RoddyH17/web3-vc
+/plugin install web3-vc@web3-vc
 ```
 
-This installs `mcp` + `httpx` (plus `pytest` for dev) into a local `.venv/`.
+The marketplace ships with one plugin (also named `web3-vc`), so the install syntax is `<plugin-name>@<marketplace-name>` — both happen to be `web3-vc`.
 
-### Step 2: Smoke-test the connector
+### Step 2: Verify
+
+Type `/` in Claude Code and you should see commands under the `web3-vc:` namespace:
+
+- `/web3-vc:sector`
+- `/web3-vc:unit-economics`
+- `/web3-vc:scout`
+- (plus the Phase 1 stubs)
+
+Verify the MCP connector is up:
+
+```text
+/mcp
+```
+
+You should see `defillama` listed and connected.
+
+### Step 3: Smoke test
+
+```text
+/web3-vc:sector dexs
+```
+
+Returns the top 20 spot DEXes by 7-day volume.
+
+### Connector dev (optional, for contributors)
+
+If you're modifying the DefiLlama connector source, sync deps and run tests locally:
 
 ```bash
+cd plugins/web3-vc/connectors/defillama
+uv sync --extra dev
 uv run pytest -xvs tests/
 ```
 
-You should see six integration tests pass. If they fail with network errors, check connectivity to `api.llama.fi`.
-
-### Step 3: Wire the plugin into Claude Code
-
-The path resolution depends on Claude Code's plugin system handling `${CLAUDE_PLUGIN_ROOT}` interpolation. If it doesn't, edit `.mcp.json` and replace `${CLAUDE_PLUGIN_ROOT}` with the absolute path to this directory.
-
-Then in Claude Code, load the plugin from this directory and verify with:
-
-```text
-/sector dexs
-```
-
-You should get a top-20 spot DEX leaderboard.
+Six integration tests should pass (they hit the live DefiLlama API).
 
 ## Sample workflows
 
 ### Weekly DEX sector scan
 
 ```text
-/sector dexs
-/sector derivatives
+/web3-vc:sector dexs
+/web3-vc:sector derivatives
 ```
 
-Outputs are written to `./scans/{sector}-{date}.md`.
+Outputs are written to `./scans/{sector}-{date}.md` relative to the working directory.
 
 ### Deep-dive a protocol
 
 ```text
-/unit-economics hyperliquid
+/web3-vc:unit-economics hyperliquid
 ```
 
 Output written to `./fundamentals/hyperliquid-{date}.md`.
@@ -123,7 +151,7 @@ Output written to `./fundamentals/hyperliquid-{date}.md`.
 ### Discover candidates aligned with a thesis
 
 ```text
-/scout perp DEX next-gen microstructure
+/web3-vc:scout perp DEX next-gen microstructure
 ```
 
 Output written to `./scout/{thesis-slug}-{date}.md`.

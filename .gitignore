@@ -9,10 +9,9 @@ __pycache__/
 build/
 dist/
 
-# uv / virtualenvs
+# uv / virtualenvs (uv.lock IS committed for reproducibility)
 .venv/
 .python-version
-uv.lock
 
 # pytest / coverage
 .pytest_cache/
@@ -26,13 +25,14 @@ htmlcov/
 *.swp
 *.swo
 
-# plugin runtime outputs (user research artifacts — committed individually if user wants)
-/scans/
-/fundamentals/
-/scout/
-/onchain/
-/theses/
-/watchlist/
+# plugin runtime outputs — these are user research artifacts written by the skills;
+# commit them individually if you want to keep a longitudinal record.
+scans/
+fundamentals/
+scout/
+onchain/
+theses/
+watchlist/
 
 # secrets (none used in Phase 0, but reserve)
 .env
