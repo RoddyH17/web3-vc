@@ -297,7 +297,7 @@ g = r − m / (P/S)
 
 ## Step 5 — 输出结构化报告
 
-把报告写入 `./fundamentals/<slug>-<YYYY-MM-DD>.md`。若目录不存在，先创建。
+把报告写入 `~/2026_class_project/roddy95o-website/content/research/<YYYY-MM-DD>-<slug>-fundamental/` (auto-traces to portfolio site; fallback `./fundamentals/<slug>-<YYYY-MM-DD>.md`)。若目录不存在，先创建。
 
 ### 报告骨架（必须遵守）
 

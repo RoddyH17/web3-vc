@@ -197,7 +197,7 @@ HHI 解读：
 
 ### Phase D — 输出
 
-写入 `./sectors/<sector>-<YYYY-MM-DD>.md`。
+写入 `~/2026_class_project/roddy95o-website/content/research/<YYYY-MM-DD>-<sector>-sector-scan/` (or fallback `./sectors/<sector>-<YYYY-MM-DD>.md` when website dir not available)。
 
 #### D.1 必须的两类输出（兼顾选股 + 择赛道）
 
@@ -278,7 +278,7 @@ HHI 解读：
 ```
 
 #### D.4 保存
-写入 `./sectors/<sector>-<YYYY-MM-DD>.md`。若目录不存在，创建。
+写入 `~/2026_class_project/roddy95o-website/content/research/<YYYY-MM-DD>-<sector>-sector-scan/` (or fallback `./sectors/<sector>-<YYYY-MM-DD>.md` when website dir not available)。若目录不存在，创建。
 
 ---
 
