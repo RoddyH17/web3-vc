@@ -393,6 +393,23 @@ Things that look like signal but mostly aren't:
 
 ---
 
+## Appendix B+: Companion doc — Research Output Template
+
+This metrics doc tells you **what to measure**. For **how to package the measurements into a publication-grade research piece**, see the companion doc:
+
+→ [`research-output-template.md`](./research-output-template.md)
+
+That doc reverse-engineers the writing template used by top crypto VCs (Paradigm / Multicoin / a16z Crypto / Variant / Delphi) from their public articles and benchmarks our own outputs against them.
+
+Key takeaways:
+
+- **Universal structure**: thesis statement → market opportunity (TAM) → case for X (team + mechanism + risk) → why long/short X → optionality scenarios
+- **7 evidence types**: on-chain / TAM math / financials / competitive / mechanism / founder / stress test — top VC pieces use 5-7 of these
+- **3-5 designed charts**, not markdown tables — visualization is part of credibility
+- **Cross-validation finding (Aave VC Thesis 2026-05-25)**: our outputs are **stronger in rigor + reproducibility** but **weaker in storytelling + founder analysis + designed visuals** vs Multicoin Ethena benchmark
+
+Read `research-output-template.md` before publishing any research artifact.
+
 ## Appendix C: When to re-read this doc
 
 - **Quarterly.** Web3 metric norms drift. Healthy fees/TVL ranges shift with market cycles.
